@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Sapo.DI.Runtime.Interfaces;
 using Sapo.DI.Samples.Testing.Runtime;
 using Sapo.DI.Tests.Runtime.Helpers;
 

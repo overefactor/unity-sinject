@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Sapo.DI.Tests.Runtime",
-        "Sapo.DI.Samples.Testing.Runtime"
+        "Sapo.DI.Samples.Testing.Runtime",
+        "Sapo.DI.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
