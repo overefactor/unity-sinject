@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Sapo.DI.Runtime.Common;
 using Object = UnityEngine.Object;
 
 namespace Sapo.DI.Runtime.Core
@@ -11,7 +12,7 @@ namespace Sapo.DI.Runtime.Core
 
         public object Primary => AliveInstances.FirstOrDefault();
 
-        public IEnumerable<object> Instances
+        internal IEnumerable<object> Instances
         {
             get
             {
@@ -30,7 +31,7 @@ namespace Sapo.DI.Runtime.Core
                 {
                     var next = current.Next;
                     
-                    if (IsAlive(current.Value)) yield return current.Value;
+                    if (current.Value.IsAlive()) yield return current.Value;
                     else
                     {
                         _instanceNodes.Remove(current);
@@ -54,17 +55,11 @@ namespace Sapo.DI.Runtime.Core
             collection.TryRegister(instance);
             return collection;
         }
-
-        private static bool IsAlive(object instance)
-        {
-            var isObjectOrActiveUnityObject = instance != null && (instance is not Object o || o);
-            return isObjectOrActiveUnityObject;
-        }
         
         
         public bool TryRegister(object instance)
         {
-            if (!IsAlive(instance)) return false;
+            if (!instance.IsAlive()) return false;
             if (_instanceNodes.ContainsKey(instance)) return false;
 
             _instanceNodes.Add(instance, _instances.AddLast(instance));
