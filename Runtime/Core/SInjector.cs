@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sapo.DI.Runtime.Common;
 using Sapo.DI.Runtime.Interfaces;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Sapo.DI.Runtime.Core
 {
@@ -26,71 +26,71 @@ namespace Sapo.DI.Runtime.Core
         }
 
         private readonly ISInjector _parent;
-        private readonly Dictionary<Type, object> _instances = new();
-        internal IEnumerable<object> RegisteredInstances => _instances.Values;
+        private readonly Dictionary<Type, SInstanceCollection> _instances = new();
 
-        public SInjector() => _instances[typeof(ISInjector)] = this;
+        internal IEnumerable<object> RegisteredInstances =>
+            _instances.Values.SelectMany(c => c.AliveInstances).ToArray();
+
+        public SInjector() => _instances[typeof(ISInjector)] = SInstanceCollection.With(this);
 
         public SInjector(SInjector parent) : this() => _parent = parent;
-
-
-        public T Resolve<T>() => (T)Resolve(typeof(T));
-
-        public object Resolve(Type type)
-        {
-            if (TryResolve(type, out var instance)) return instance;
-
-            Debug.LogError($"[Sapo.DI] Unable to resolve <color=#ff8000>{type}</color> type. Make sure it's registered.");
-            return null;
-        }
-
-        public bool TryResolve<T>(out T instance)
-        {
-            if (TryResolve(typeof(T), out var obj))
-            {
-                instance = (T)obj;
-                return true;
-            }
-
-            instance = default;
-            return false;
-        }
-
+        
         private bool TryResolveInSelf(Type type, out object instance)
         {
-            if (!_instances.TryGetValue(type, out instance)) return false;
-            
-            var isObjectOrActiveUnityObject = instance != null && (instance is not Object o || o);
-            if (isObjectOrActiveUnityObject) return true;
+            if (!_instances.TryGetValue(type, out var collection))
+            {
+                instance = null;
+                return false;
+            }
+
+            instance = collection.Primary;
+            if (instance != null) return true;
 
             _instances.Remove(type);
             instance = null;
             return false;
         }
         
+        private bool TryResolveCollection(Type type, out object collection)
+        {
+            var result = new List<object>();
+
+            if (type.IsArray(out var elementType) || type.IsEnumerable(out elementType))
+            {
+                ResolveAll(elementType, result);
+                collection = result.CastToArray(elementType);
+                return true;
+            }
+
+            if (type.IsList(out elementType))
+            {
+                ResolveAll(elementType, result);
+                collection = result.CastToList(elementType);
+                return true;
+            }
+            
+            collection = null;
+            return false;
+        }
+        
         public bool TryResolve(Type type, out object instance)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
+            if (TryResolveCollection(type, out instance)) return true;
             
             if (TryResolveInSelf(type, out instance)) return true;
             return _parent?.TryResolve(type, out instance) ?? false;
         }
 
-        public bool IsRegistered<T>() => IsRegistered(typeof(T));
-
-        public bool IsRegistered(Type type) => TryResolve(type, out _);
-
-
-        public void Register<T>(object instance) => Register(typeof(T), instance);
-
-        public void Register(Type type, object instance)
+        public void ResolveAll(Type type, List<object> instances)
         {
-            if (TryRegister(type, instance)) return;
+            if (type == null) throw new ArgumentNullException(nameof(type));
 
-            Debug.LogError($"[Sapo.DI] Unable to register <color=#ff8000>{type}</color> type. It's already registered.");
+            if (_instances.TryGetValue(type, out var collection)) 
+                instances.AddRange(collection.AliveInstances);
+
+            _parent?.ResolveAll(type, instances);
         }
-
-        public bool TryRegister<T>(object instance) => TryRegister(typeof(T), instance);
 
         public bool TryRegister(Type type, object instance)
         {
@@ -99,25 +99,22 @@ namespace Sapo.DI.Runtime.Core
             if (!type.IsInstanceOfType(instance))
                 throw new ArgumentException("The instance type must be assignable to the specified type.");
 
-            if (TryResolveInSelf(type, out _)) return false;
+            if (!_instances.TryGetValue(type, out var collection))
+            {
+                collection = SInstanceCollection.Empty();
+                _instances.Add(type, collection);
+            }
             
-            var isDestroyedUnityObject = instance is Object o && !o;
-            if (isDestroyedUnityObject) return false;
-
-            _instances[type] = instance;
-            return true;
+            return collection.TryRegister(instance);
         }
-
-        public void Unregister<T>(object instance) => Unregister(typeof(T), instance);
         
         public void Unregister(Type type, object instance)
         {
             if (instance == null) throw new ArgumentNullException(nameof(instance));
+            if (!_instances.TryGetValue(type, out var collection)) return;
             
-            if (!TryResolve(type, out var i)) return;
-            if (i != instance) return;
-            
-            _instances.Remove(type);
+            collection.Unregister(instance);
+            if (collection.IsEmpty) _instances.Remove(type);
         }
 
         public void Inject(object instance)
@@ -132,7 +129,7 @@ namespace Sapo.DI.Runtime.Core
             var fields = ReflectionCache.GetSInjectFields(type);
             if (fields.IsEmpty()) return;
 
-            foreach (var field in fields) field.SetValue(instance, Resolve(field.FieldType));
+            foreach (var field in fields) field.SetValue(instance, this.Resolve(field.FieldType));
         }
         
         private void TryInjectComponents(object instance)
@@ -148,7 +145,7 @@ namespace Sapo.DI.Runtime.Core
 
         internal void PerformSelfInjection()
         {
-            foreach (var instance in _instances.Values) 
+            foreach (var instance in _instances.Values.SelectMany(c => c.Instances)) 
                 Inject(instance);
         }
         

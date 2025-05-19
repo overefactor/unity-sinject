@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Sapo.DI.Runtime.Behaviours;
 using Sapo.DI.Runtime.Interfaces;
 using UnityEngine;
@@ -41,6 +42,8 @@ namespace Sapo.DI.Tests.Runtime.Helpers
         public bool TryResolve<T>(out T instance) => _injector.TryResolve(out instance);
 
         public bool TryResolve(Type type, out object instance) => _injector.TryResolve(type, out instance);
+        
+        public void ResolveAll(Type type, List<object> instances) => _injector.ResolveAll(type, instances);
 
         public bool IsRegistered<T>() => _injector.IsRegistered<T>();
 
@@ -131,7 +134,7 @@ namespace Sapo.DI.Tests.Runtime.Helpers
         }
         
         /// <summary>
-        /// Creates a new game object with component and returns the component.
+        /// Creates a new game object with a component and returns the component.
         /// </summary>
         /// <param name="name">Name of the game object.</param>
         /// <typeparam name="T">Type of the component to add.</typeparam>

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Sapo.DI.Runtime.Core;
+using Sapo.DI.Runtime.Interfaces;
 using Sapo.DI.Tests.Runtime.TestData;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -83,7 +85,7 @@ namespace Sapo.DI.Tests.Runtime.Core
         }
 
         [Test]
-        public void GenericRegister_WithAlreadyRegistered_ShouldNotRegister()
+        public void GenericRegister_WithAlreadyRegistered_ShouldRegisterSecondInstance()
         {
             // Arrange
             LogAssert.ignoreFailingMessages = true;
@@ -98,6 +100,8 @@ namespace Sapo.DI.Tests.Runtime.Core
             // Assert
             Assert.That(injector.IsRegistered<IServiceA>(), Is.True);
             Assert.That(injector.Resolve<IServiceA>(), Is.EqualTo(service));
+            Assert.That(injector.RegisteredInstances, Does.Contain(service));
+            Assert.That(injector.RegisteredInstances, Does.Contain(service2));
         }
 
         [Test]
@@ -150,6 +154,7 @@ namespace Sapo.DI.Tests.Runtime.Core
             
             // Assert
             Assert.That(injector.IsRegistered<IServiceA>(), Is.False);
+            Assert.That(injector.RegisteredInstances, Does.Not.Contains(service));
         }
         
         
@@ -202,7 +207,7 @@ namespace Sapo.DI.Tests.Runtime.Core
         }
         
         [Test]
-        public void Register_WithAlreadyRegistered_ShouldNotRegister()
+        public void Register_WithAlreadyRegistered_ShouldRegisterSecondInstance()
         {
             // Arrange
             LogAssert.ignoreFailingMessages = true;
@@ -217,6 +222,8 @@ namespace Sapo.DI.Tests.Runtime.Core
             // Assert
             Assert.That(injector.IsRegistered<IServiceA>(), Is.True);
             Assert.That(injector.Resolve<IServiceA>(), Is.EqualTo(service));
+            Assert.That(injector.RegisteredInstances, Does.Contain(service));
+            Assert.That(injector.RegisteredInstances, Does.Contain(service2));
         }
         
         [Test]
@@ -269,6 +276,7 @@ namespace Sapo.DI.Tests.Runtime.Core
             
             // Assert
             Assert.That(injector.IsRegistered<IServiceA>(), Is.False);
+            Assert.That(injector.RegisteredInstances, Does.Not.Contains(service));
         }
         
         #endregion
@@ -306,7 +314,7 @@ namespace Sapo.DI.Tests.Runtime.Core
         }
         
         [Test]
-        public void GenericTryRegister_WithAlreadyRegistered_ShouldNotRegisterAndReturnFalse()
+        public void GenericTryRegister_WithAlreadyRegistered_ShouldRegisterSecondInstance()
         {
             // Arrange
             var injector = new SInjector();
@@ -318,9 +326,11 @@ namespace Sapo.DI.Tests.Runtime.Core
             var result = injector.TryRegister<IServiceA>(service2);
             
             // Assert
-            Assert.That(result, Is.False);
+            Assert.That(result, Is.True);
             Assert.That(injector.IsRegistered<IServiceA>(), Is.True);
             Assert.That(injector.Resolve<IServiceA>(), Is.EqualTo(service));
+            Assert.That(injector.RegisteredInstances, Does.Contain(service));
+            Assert.That(injector.RegisteredInstances, Does.Contain(service2));
         }
         
         [Test]
@@ -376,6 +386,40 @@ namespace Sapo.DI.Tests.Runtime.Core
             Assert.That(injector.IsRegistered<IServiceA>(), Is.False);
         }
         
+        [Test]
+        public void TryRegister_RegistersOnlyOneInstance()
+        {
+            // Arrange
+            var injector = new SInjector();
+            var service = new ServiceA();
+            
+            // Act
+            var result = injector.TryRegister(typeof(IServiceA), service);
+            
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(injector.IsRegistered<IServiceA>(), Is.True);
+            Assert.That(injector.RegisteredInstances.Count(i => i == service), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void TryRegister_WithRegisteredSameInstance_ShouldRemainSameAndReturnFalse()
+        {
+            // Arrange
+            var injector = new SInjector();
+            var service = new ServiceA();
+            injector.Register<IServiceA>(service);
+            
+            // Act
+            var result = injector.TryRegister(typeof(IServiceA), service);
+            
+            // Assert
+            Assert.That(result, Is.False);
+            Assert.That(injector.IsRegistered<IServiceA>(), Is.True);
+            Assert.That(injector.RegisteredInstances.Count(i => i == service), Is.EqualTo(1));
+        }
+
+        
         #endregion
 
         #region TryRegister
@@ -426,7 +470,7 @@ namespace Sapo.DI.Tests.Runtime.Core
         }
         
         [Test]
-        public void TryRegister_WithAlreadyRegistered_ShouldNotRegisterAndReturnFalse()
+        public void TryRegister_WithAlreadyRegistered_ShouldRegisterSecondInstance()
         {
             // Arrange
             var injector = new SInjector();
@@ -438,9 +482,11 @@ namespace Sapo.DI.Tests.Runtime.Core
             var result = injector.TryRegister(typeof(IServiceA), service2);
             
             // Assert
-            Assert.That(result, Is.False);
+            Assert.That(result, Is.True);
             Assert.That(injector.IsRegistered<IServiceA>(), Is.True);
             Assert.That(injector.Resolve<IServiceA>(), Is.EqualTo(service));
+            Assert.That(injector.RegisteredInstances, Does.Contain(service));
+            Assert.That(injector.RegisteredInstances, Does.Contain(service2));
         }
         
         [Test]
@@ -494,6 +540,7 @@ namespace Sapo.DI.Tests.Runtime.Core
             // Assert
             Assert.That(result, Is.False);
             Assert.That(injector.IsRegistered<IServiceA>(), Is.False);
+            Assert.That(injector.RegisteredInstances, Does.Not.Contains(service));
         }
         
         #endregion
@@ -964,9 +1011,100 @@ namespace Sapo.DI.Tests.Runtime.Core
             // Assert
             Assert.That(Act, Throws.ArgumentNullException);
         }
+
+        [Test]
+        public void TryResolve_ShouldResolveArray()
+        {
+            // Arrange
+            var injector = new SInjector();
+            var serviceA = new ServiceA();
+            var serviceB = new ServiceB();
+            
+            injector.Register(typeof(IServiceA), serviceA);
+            injector.Register(typeof(IServiceB), serviceB);
+            
+            // Act
+            var result = injector.TryResolve(typeof(IServiceA[]), out var array);
+            
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(array, Is.TypeOf<IServiceA[]>());
+            Assert.That(array, Has.Length.EqualTo(1));
+            Assert.That(array, Contains.Item(serviceA));
+        }
+        
+        [Test]
+        public void TryResolve_ShouldResolveList()
+        {
+            // Arrange
+            var injector = new SInjector();
+            var serviceA = new ServiceA();
+            var serviceB = new ServiceB();
+            
+            injector.Register(typeof(IServiceA), serviceA);
+            injector.Register(typeof(IServiceB), serviceB);
+            
+            // Act
+            var result = injector.TryResolve(typeof(List<IServiceA>), out var list);
+            
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(list, Is.TypeOf<List<IServiceA>>());
+            Assert.That(list, Has.Count.EqualTo(1));
+            Assert.That(list, Contains.Item(serviceA));
+        }
+        
+        [Test]
+        public void TryResolve_ShouldResolveEnumerable()
+        {
+            // Arrange
+            var injector = new SInjector();
+            var serviceA = new ServiceA();
+            var serviceB = new ServiceB();
+            
+            injector.Register(typeof(IServiceA), serviceA);
+            injector.Register(typeof(IServiceB), serviceB);
+            
+            // Act
+            var result = injector.TryResolve(typeof(IEnumerable<IServiceA>), out var enumerable);
+            
+            // Assert
+            Assert.That(result, Is.True);
+            Assert.That(enumerable, Is.AssignableTo<IEnumerable<IServiceA>>());
+            Assert.That(enumerable, Contains.Item(serviceA));
+        }
+        
         
         #endregion
 
+        #region ResolveAll
+
+        [Test]
+        public void ResolveAll_ShouldResolveAllInstances()
+        {
+            // Arrange
+            var injector = new SInjector();
+            var service1 = new ServiceA();
+            var service2 = new ServiceA();
+            injector.Register<IServiceA>(service1);
+            injector.Register<IServiceA>(service2);
+            
+            var result = new List<object>();
+            
+            // Act
+            injector.ResolveAll(typeof(IServiceA), result);
+            
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.Not.Empty);
+            Assert.That(result, Contains.Item(service1));
+            Assert.That(result, Contains.Item(service2));
+            Assert.That(result, Has.Count.EqualTo(2));
+        }
+
+
+        #endregion
+        
         #region Inject
 
         [Test]

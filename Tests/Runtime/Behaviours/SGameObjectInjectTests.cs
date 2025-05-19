@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Sapo.DI.Runtime.Behaviours;
+using Sapo.DI.Runtime.Interfaces;
 using Sapo.DI.Tests.Runtime.Helpers;
 using Sapo.DI.Tests.Runtime.TestData;
 using UnityEngine;
