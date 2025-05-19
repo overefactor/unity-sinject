@@ -1,6 +1,6 @@
 {
   "name": "sk.sapo.dependency-injection",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "displayName": "SInject",
   "description": "SInject is a dependency injection framework for unity. It is designed to be simple and easy to use. It is based on the concept of injectors and services. It is designed to be used in a way that is easy to understand and use. It also includes a testing framework that makes it easy to write tests for your code. Make sure to check out the samples to see how to use it.",
   "unity": "2022.1",
@@ -14,7 +14,7 @@
   ],
   "author": {
     "name": "Sapo",
-    "email": "",
+    "email": "samopoul@pm.me",
     "url": ""
   },
   "samples": [
@@ -32,6 +32,11 @@
       "displayName": "Scene Loading",
       "description": "This sample shows the power of Root injector. It demonstrates loading scenes with dependencies. There is included single scene and additive scene loading.",
       "path": "Samples~/SceneLoading"
+    },
+    {
+      "displayName": "Collection Injection",
+      "description": "This sample demonstrates how to use collection injection to register and resolve multiple services implementing the same interface. You can explore both attribute-based array injection and manual array resolution through injector.",
+      "path": "Samples~/CollectionInjection"
     },
     {
       "displayName": "Testing",
