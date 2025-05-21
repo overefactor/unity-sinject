@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Sapo.DI.Runtime.Behaviours
 {
     /// <summary>
-    /// Scene Inject is a component that injects entire scene during scene load.
+    /// Scene Inject is a component that injects an entire scene during a scene load.
     /// </summary>
     [HelpURL("https://github.com/samopoul/Sapo.DI")]
     [DisplayName("Scene Inject")]
@@ -13,6 +13,8 @@ namespace Sapo.DI.Runtime.Behaviours
     [DisallowMultipleComponent]
     public sealed class SSceneInject : MonoBehaviour, ISInjectorRegisterHandler
     {
+        [SerializeField] private bool sceneInjector = false;
+        
         private enum InjectionMethod
         {
             Awake = 0,
@@ -62,7 +64,7 @@ namespace Sapo.DI.Runtime.Behaviours
         private void InjectAndDestroy()
         {
             var injector = SRootInjector.FindOrCreateSingleton();;
-            injector.InjectScene(gameObject.scene);
+            injector.InjectScene(gameObject.scene, sceneInjector);
             Destroy();
         }
 

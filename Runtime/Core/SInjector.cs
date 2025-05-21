@@ -33,7 +33,7 @@ namespace Sapo.DI.Runtime.Core
 
         public SInjector() => _instances[typeof(ISInjector)] = SInstanceCollection.With(this);
 
-        public SInjector(SInjector parent) : this() => _parent = parent;
+        public SInjector(ISInjector parent) : this() => _parent = parent;
         
         private bool TryResolveInSelf(Type type, out object instance)
         {
