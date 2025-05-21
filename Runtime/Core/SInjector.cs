@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sapo.DI.Runtime.Common;
@@ -53,7 +54,7 @@ namespace Sapo.DI.Runtime.Core
         
         private bool TryResolveCollection(Type type, out object collection)
         {
-            var result = new List<object>();
+            var result = new HashSet<object>();
 
             if (type.IsArray(out var elementType) || type.IsEnumerable(out elementType))
             {
@@ -82,12 +83,13 @@ namespace Sapo.DI.Runtime.Core
             return _parent?.TryResolve(type, out instance) ?? false;
         }
 
-        public void ResolveAll(Type type, List<object> instances)
+        public void ResolveAll(Type type, ISet<object> instances)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
 
-            if (_instances.TryGetValue(type, out var collection)) 
-                instances.AddRange(collection.AliveInstances);
+            if (_instances.TryGetValue(type, out var collection))
+                foreach (var instance in collection.AliveInstances)
+                    instances.Add(instance);
 
             _parent?.ResolveAll(type, instances);
         }

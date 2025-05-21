@@ -1089,7 +1089,7 @@ namespace Sapo.DI.Tests.Runtime.Core
             injector.Register<IServiceA>(service1);
             injector.Register<IServiceA>(service2);
             
-            var result = new List<object>();
+            var result = new HashSet<object>();
             
             // Act
             injector.ResolveAll(typeof(IServiceA), result);

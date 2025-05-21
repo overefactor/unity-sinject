@@ -43,7 +43,7 @@ namespace Sapo.DI.Tests.Runtime.Helpers
 
         public bool TryResolve(Type type, out object instance) => _injector.TryResolve(type, out instance);
         
-        public void ResolveAll(Type type, List<object> instances) => _injector.ResolveAll(type, instances);
+        public void ResolveAll(Type type, ISet<object> instances) => _injector.ResolveAll(type, instances);
 
         public bool IsRegistered<T>() => _injector.IsRegistered<T>();
 
