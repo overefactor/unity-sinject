@@ -39,11 +39,6 @@
       "path": "Samples~/CollectionInjection"
     },
     {
-      "displayName": "Scene Injectors",
-      "description": "This sample demonstrates how to create and use scene injectors. It showcases the hierarchical relationship between Root, Scene, and GameObject injectors, which can be visualized and debugged using the SInject Context Debugger Window.",
-      "path": "Samples~/SceneInjectors"
-    },
-    {
       "displayName": "Testing",
       "description": "This sample shows how to use SInject in tests. It demonstrates how to use SInject in tests. Check out the test scripts and how they are using SInject.",
       "path": "Samples~/Testing"

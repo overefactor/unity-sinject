@@ -10,13 +10,11 @@ namespace Sapo.DI.Editor.Behaviours
     {
         private readonly GUIContent _tempContent = new GUIContent();
 
-        private SerializedProperty _sceneInjector;
         private SerializedProperty _injectOn;
         
         
         private void OnEnable()
         {
-            _sceneInjector = serializedObject.FindProperty("sceneInjector");
             _injectOn = serializedObject.FindProperty("injectOn");
         }
 
@@ -26,7 +24,6 @@ namespace Sapo.DI.Editor.Behaviours
                 true);
 
             serializedObject.UpdateIfRequiredOrScript();
-            EditorGUILayout.PropertyField(_sceneInjector);
             EditorGUILayout.PropertyField(_injectOn);
             serializedObject.ApplyModifiedProperties();
             

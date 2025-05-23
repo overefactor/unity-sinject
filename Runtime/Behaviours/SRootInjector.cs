@@ -35,21 +35,8 @@ namespace Sapo.DI.Runtime.Behaviours
         private bool _registerSelfComponents;
         
         private readonly SInjector _injector = new();
-        private readonly Dictionary<Scene, ISInjector> _sceneInjectors = new();
         
         internal SInjector Injector => _injector;
-
-
-        private void OnEnable()
-        {
-            SceneManager.sceneUnloaded += SceneManager_SceneUnloaded;
-        }
-
-        private void OnDisable()
-        {
-            SceneManager.sceneUnloaded -= SceneManager_SceneUnloaded;
-        }
-
 
         private void Awake()
         {
@@ -96,22 +83,10 @@ namespace Sapo.DI.Runtime.Behaviours
 
             _registerSelfComponents = true;
         }
-
-        internal ISInjector GetSceneInjector(Scene scene) => _sceneInjectors.GetValueOrDefault(scene, _injector);
-
-        private ISInjector GetOrCreateSceneInjector(Scene scene)
-        {
-            if (_sceneInjectors.TryGetValue(scene, out var injector)) return injector;
-
-            return _sceneInjectors[scene] = new SInjector(_injector);
-        }
-
-        private void SceneManager_SceneUnloaded(Scene scene) => _sceneInjectors.Remove(scene);
-
-        internal void InjectScene(Scene scene, bool createSceneInjector = false)
+        
+        internal void InjectScene(Scene scene)
         {
             Initialize();
-            var sceneInjector = createSceneInjector ? GetOrCreateSceneInjector(scene) : _injector;
             
             var reflectionCache = SInjector.ReflectionCache;
 
@@ -124,12 +99,12 @@ namespace Sapo.DI.Runtime.Behaviours
             {
                 foreach (var injector in root.GetComponentsInChildren<SGameObjectInject>(true)
                              .Where(i => i.CreateLocalInjector))
-                    localInjectors.Add(injector.gameObject, new SInjector(sceneInjector));
+                    localInjectors.Add(injector.gameObject, new SInjector(_injector));
                 
                 foreach (var (componentT, registerT) in reflectionCache.RegistrableComponents)
                 foreach (var component in root.GetComponentsInChildren(componentT, true))
                 {
-                    var injector = localInjectors.GetValueOrDefault(component.gameObject, sceneInjector);
+                    var injector = localInjectors.GetValueOrDefault(component.gameObject, _injector);
                     foreach (var type in registerT) injector.Register(type, component);
                 }
 
@@ -156,7 +131,7 @@ namespace Sapo.DI.Runtime.Behaviours
             }
 
             foreach (var (gameObj, handler) in registerHandlers)
-                handler.OnRegister(localInjectors.GetValueOrDefault(gameObj, sceneInjector));
+                handler.OnRegister(localInjectors.GetValueOrDefault(gameObj, _injector));
             
             if (_registerSelfComponents)
             {
@@ -168,10 +143,10 @@ namespace Sapo.DI.Runtime.Behaviours
             foreach (var root in roots)
             foreach (var injectableComponentT in reflectionCache.InjectableComponents)
             foreach (var component in root.GetComponentsInChildren(injectableComponentT, true))
-                localInjectors.GetValueOrDefault(component.gameObject, sceneInjector).Inject(component);
+                localInjectors.GetValueOrDefault(component.gameObject, _injector).Inject(component);
             
             foreach (var (gameObj, handler) in injectHandlers) 
-                handler.OnInject(localInjectors.GetValueOrDefault(gameObj, sceneInjector));
+                handler.OnInject(localInjectors.GetValueOrDefault(gameObj, _injector));
 
             _registerSelfComponents = false;
         }
@@ -181,8 +156,6 @@ namespace Sapo.DI.Runtime.Behaviours
             if (obj == null) throw new ArgumentNullException(nameof(obj));
             
             Initialize();
-            var sceneInjector = GetSceneInjector(obj.scene);
-            
             var reflectionCache = SInjector.ReflectionCache;
 
             var localInjectors = obj.GetComponentsInChildren<SGameObjectInject>(true)
@@ -195,17 +168,17 @@ namespace Sapo.DI.Runtime.Behaviours
             foreach (var (componentT, registerT) in reflectionCache.RegistrableComponents)
             foreach (var component in obj.GetComponentsInChildren(componentT, true))
             {
-                var injector = localInjectors.GetValueOrDefault(component.gameObject, sceneInjector);
+                var injector = localInjectors.GetValueOrDefault(component.gameObject, _injector);
                 foreach (var type in registerT) injector.Register(type, component);
             }
 
-            foreach (var handler in registerHandlers) handler.OnRegister(sceneInjector);
+            foreach (var handler in registerHandlers) handler.OnRegister(_injector);
             
             foreach (var injectableComponentT in reflectionCache.InjectableComponents)
             foreach (var component in obj.GetComponentsInChildren(injectableComponentT, true))
-                localInjectors.GetValueOrDefault(component.gameObject, sceneInjector).Inject(component);
+                localInjectors.GetValueOrDefault(component.gameObject, _injector).Inject(component);
             
-            foreach (var handler in injectHandlers) handler.OnInject(sceneInjector);
+            foreach (var handler in injectHandlers) handler.OnInject(_injector);
         }
 
         internal static SRootInjector FindOrCreateSingleton()

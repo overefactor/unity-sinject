@@ -72,12 +72,8 @@ namespace Sapo.DI.Editor.Windows
 
             result.Add(new InjectorInfo("Root", _injector.Injector));
 
-            var sceneInjector = _injector.GetSceneInjector(context.scene);
-            if (sceneInjector != _injector.Injector)
-                result.Add(new InjectorInfo($"{context.scene.name} [{context.scene.handle}]", sceneInjector));
-            
             if (!context.TryGetComponent<SGameObjectInject>(out var gInject)) return result;
-            if (gInject.LocalInjector == sceneInjector) return result;
+            if (!gInject.CreateLocalInjector) return result;
             
             result.Add(new InjectorInfo("GameObject", gInject.LocalInjector));
             return result;

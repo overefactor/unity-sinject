@@ -13,8 +13,6 @@ namespace Sapo.DI.Runtime.Behaviours
     [DisallowMultipleComponent]
     public sealed class SSceneInject : MonoBehaviour, ISInjectorRegisterHandler
     {
-        [SerializeField] private bool sceneInjector = false;
-        
         private enum InjectionMethod
         {
             Awake = 0,
@@ -64,7 +62,7 @@ namespace Sapo.DI.Runtime.Behaviours
         private void InjectAndDestroy()
         {
             var injector = SRootInjector.FindOrCreateSingleton();;
-            injector.InjectScene(gameObject.scene, sceneInjector);
+            injector.InjectScene(gameObject.scene);
             Destroy();
         }
 
