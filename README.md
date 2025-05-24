@@ -453,6 +453,23 @@ Assert.That(rootInjector.Resolve<IService[]>(), Is.EquivalentTo(new [] { service
 Assert.That(injector.Resolve<IService[]>(), Is.EquivalentTo(new [] { service2 }));
 ```
 
+## SInject Context Debugger
+
+SInject includes a Context Debugger window that allows you to inspect and debug your dependency injection containers at
+runtime. You can see what services are registered and their status in different injector scopes (root injector and local
+injectors).
+
+### Opening the Debugger
+
+To open the Context Debugger window in Unity Editor:
+
+1. Go to `Window/Sapo/DI/Context Debugger`
+2. Select a game object in the hierarchy to see its injection context
+3. Use the navigation at the top to switch between different injector scopes
+4. Inspect registered services and their status in the selected injector scope
+
+[![Context Debugger Window](Documentation~/context-debugger.png)](Documentation~/context-debugger.png)
+
 
 ## Injection Pipeline
 
@@ -467,4 +484,7 @@ The initialization phase, which is responsible for registering service assets, i
 
 ## License
 
-This project is licensed under the MIT License—see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT [License](LICENSE).
+
+> **Note:** While the license permits commercial use, please do not repackage or resell this package as-is.  
+> Commercial use within larger software solutions is welcome and encouraged.

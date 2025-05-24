@@ -74,7 +74,7 @@ namespace Sapo.DI.Editor.Common
 
                     EditorGUI.BeginDisabledGroup(true);
                     if (instance is Object uo) EditorGUILayout.ObjectField(uo, uo.GetType(), true);
-                    else EditorGUILayout.LabelField(instance.ToString());
+                    else EditorGUILayout.LabelField(GetInstanceInfo(instance));
                     EditorGUI.EndDisabledGroup();
                 
                     GUILayout.Space(2);
@@ -93,6 +93,14 @@ namespace Sapo.DI.Editor.Common
             }
 
             return hasInstances;
+        }
+
+
+        
+        private string GetInstanceInfo(object instance)
+        {
+            var str = instance.ToString();
+            return str == instance.GetType().ToString() ? $"{str} [{instance.GetShortHashCode()}]" : str;
         }
     }
 }

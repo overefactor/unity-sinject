@@ -41,6 +41,8 @@ namespace Sapo.DI.Tests.Runtime.Behaviours
         [UnityTest]
         public IEnumerator Awake_WithNoRootInjector_ShouldDestroySelf()
         {
+            if (Application.isEditor) Assert.Ignore("This test only runs in Player builds.");
+            
             // Arrange
             LogAssert.ignoreFailingMessages = true;
             var g = NewG(false);
@@ -58,6 +60,8 @@ namespace Sapo.DI.Tests.Runtime.Behaviours
         [UnityTest]
         public IEnumerator Awake_WithRootInjector_ShouldInjectAndDestroySelf()
         {
+            if (Application.isEditor) Assert.Ignore("This test only runs in Player builds.");
+
             // Arrange
             var injector = NewG().AddComponent<SRootInjector>();
             var g = NewG(false);
@@ -78,6 +82,8 @@ namespace Sapo.DI.Tests.Runtime.Behaviours
         [UnityTest]
         public IEnumerator Awake_WithLocalInjector_ShouldInjectAndDestroySelf()
         {
+            if (Application.isEditor) Assert.Ignore("This test only runs in Player builds.");
+
             // Arrange
             var g = NewG(false);
             var inject = g.AddComponent<SGameObjectInject>();
@@ -99,6 +105,8 @@ namespace Sapo.DI.Tests.Runtime.Behaviours
         [UnityTest]
         public IEnumerator Awake_WithLocalInjector_WithGameObjectInjector_ShouldCallEvents_WithCorrectOrder()
         {
+            if (Application.isEditor) Assert.Ignore("This test only runs in Player builds.");
+
             // Arrange
             var g = NewG(false);
             var inject = g.AddComponent<SGameObjectInject>();
@@ -117,6 +125,8 @@ namespace Sapo.DI.Tests.Runtime.Behaviours
         [UnityTest]
         public IEnumerator Awake_WithAlreadyInjected_ShouldDestroySelf()
         {
+            if (Application.isEditor) Assert.Ignore("This test only runs in Player builds.");
+
             // Arrange
             var g = NewG(false);
             var inject = g.AddComponent<SGameObjectInject>();
