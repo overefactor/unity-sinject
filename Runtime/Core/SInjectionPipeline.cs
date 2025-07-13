@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Sapo.DI.Runtime.Behaviours;
-using Sapo.DI.Runtime.Interfaces;
+using Overefactor.DI.Runtime.Behaviours;
+using Overefactor.DI.Runtime.Interfaces;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Sapo.DI.Runtime.Core
+namespace Overefactor.DI.Runtime.Core
 {
     internal class SInjectionPipeline
     {

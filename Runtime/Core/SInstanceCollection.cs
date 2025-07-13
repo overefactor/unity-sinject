@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Sapo.DI.Runtime.Common;
-using Object = UnityEngine.Object;
+using Overefactor.DI.Runtime.Common;
 
-namespace Sapo.DI.Runtime.Core
+namespace Overefactor.DI.Runtime.Core
 {
     internal class SInstanceCollection
     {

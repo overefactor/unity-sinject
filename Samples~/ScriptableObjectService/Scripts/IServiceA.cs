@@ -1,4 +1,4 @@
-namespace Sapo.DI.Samples.ScriptableObjectService
+namespace Overefactor.DI.Samples.ScriptableObjectService
 {
     public interface IServiceA
     {

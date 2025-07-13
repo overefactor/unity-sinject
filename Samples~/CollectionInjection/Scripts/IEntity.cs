@@ -1,4 +1,4 @@
-namespace Sapo.DI.Samples.CollectionInjection
+namespace Overefactor.DI.Samples.CollectionInjection
 {
     public interface IEntity
     {

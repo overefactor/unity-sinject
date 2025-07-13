@@ -1,10 +1,10 @@
 using System.Linq;
-using Sapo.DI.Runtime.Behaviours;
+using Overefactor.DI.Runtime.Behaviours;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Sapo.DI.Editor.Behaviours
+namespace Overefactor.DI.Editor.Editor.Behaviours
 {
     internal class EditorMenuActions
     {

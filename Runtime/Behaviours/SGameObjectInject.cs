@@ -1,8 +1,8 @@
 using System.ComponentModel;
-using Sapo.DI.Runtime.Interfaces;
+using Overefactor.DI.Runtime.Interfaces;
 using UnityEngine;
 
-namespace Sapo.DI.Runtime.Behaviours
+namespace Overefactor.DI.Runtime.Behaviours
 {
     /// <summary>
     /// A GameObject Inject is a component that injects dependencies in the GameObject during game object instantiation.

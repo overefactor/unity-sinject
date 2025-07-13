@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Sapo.DI.Runtime.Attributes;
-using Sapo.DI.Runtime.Interfaces;
+using Overefactor.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Interfaces;
 using UnityEngine;
 
-namespace Sapo.DI.Samples.CollectionInjection
+namespace Overefactor.DI.Samples.CollectionInjection
 {
     public class Controller : MonoBehaviour
     {

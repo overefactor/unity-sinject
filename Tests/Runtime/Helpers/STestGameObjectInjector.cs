@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Overefactor.DI.Runtime.Behaviours;
+using Overefactor.DI.Runtime.Core;
+using Overefactor.DI.Runtime.Interfaces;
 using UnityEngine;
-using Sapo.DI.Runtime.Behaviours;
-using Sapo.DI.Runtime.Core;
-using Sapo.DI.Runtime.Interfaces;
 
-namespace Sapo.DI.Tests.Runtime.Helpers
+namespace Overefactor.DI.Tests.Tests.Runtime.Helpers
 {
     /// <summary>
     /// A helper class for injecting game objects for testing purposes.

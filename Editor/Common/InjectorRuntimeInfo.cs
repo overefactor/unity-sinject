@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Sapo.DI.Runtime.Behaviours;
-using Sapo.DI.Runtime.Common;
-using Sapo.DI.Runtime.Core;
+using Overefactor.DI.Runtime.Common;
+using Overefactor.DI.Runtime.Core;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Sapo.DI.Editor.Common
+namespace Overefactor.DI.Editor.Editor.Common
 {
     public class InjectorRuntimeInfo
     {

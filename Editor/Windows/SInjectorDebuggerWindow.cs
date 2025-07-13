@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using Sapo.DI.Editor.Common;
-using Sapo.DI.Runtime.Behaviours;
-using Sapo.DI.Runtime.Common;
-using Sapo.DI.Runtime.Core;
-using Sapo.DI.Runtime.Interfaces;
+using Overefactor.DI.Editor.Editor.Common;
+using Overefactor.DI.Runtime.Behaviours;
+using Overefactor.DI.Runtime.Common;
+using Overefactor.DI.Runtime.Core;
+using Overefactor.DI.Runtime.Interfaces;
 using UnityEditor;
 using UnityEngine;
 
-namespace Sapo.DI.Editor.Windows
+namespace Overefactor.DI.Editor.Editor.Windows
 {
     public class SInjectorDebuggerWindow : EditorWindow
     {

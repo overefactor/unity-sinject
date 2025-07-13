@@ -1,10 +1,13 @@
 {
-    "name": "Sapo.DI.Samples.CollectionInjection",
-    "rootNamespace": "Sapo.DI.Samples.CollectionInjection",
+    "name": "Overefactor.DI.Editor",
+    "rootNamespace": "Overefactor.DI.Editor",
     "references": [
-        "GUID:a2252aa5937ae420baa4f97ab83c8e2e"
+        "GUID:a2252aa5937ae420baa4f97ab83c8e2e",
+        "Overefactor.DI.Runtime"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -1,6 +1,6 @@
 using NUnit.Framework.Constraints;
 
-namespace Sapo.DI.Tests.Runtime.Helpers
+namespace Overefactor.DI.Tests.Tests.Runtime.Helpers
 {
     internal abstract class Is : NUnit.Framework.Is
     {

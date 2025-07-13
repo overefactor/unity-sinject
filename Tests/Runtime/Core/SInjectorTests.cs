@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Sapo.DI.Runtime.Core;
-using Sapo.DI.Runtime.Interfaces;
-using Sapo.DI.Tests.Runtime.TestData;
+using Overefactor.DI.Runtime.Core;
+using Overefactor.DI.Runtime.Interfaces;
+using Overefactor.DI.Tests.Tests.Runtime.TestData;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Sapo.DI.Tests.Runtime.Core
+namespace Overefactor.DI.Tests.Tests.Runtime.Core
 {
     [TestFixture]
     internal class SInjectorTests

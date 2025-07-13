@@ -1,10 +1,10 @@
-using Sapo.DI.Runtime.Attributes;
-using Sapo.DI.Runtime.Common;
+using Overefactor.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Common;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Sapo.DI.Editor.Attributes
+namespace Overefactor.DI.Editor.Editor.Attributes
 {
     /// <summary>
     /// A GUI drawer for <see cref="SRegister"/> attribute.

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sapo.DI.Runtime.Common
+namespace Overefactor.DI.Runtime.Common
 {
     internal static class EnumerableExtensions
     {

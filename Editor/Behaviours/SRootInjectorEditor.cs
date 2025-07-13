@@ -1,9 +1,9 @@
-using Sapo.DI.Editor.Common;
-using Sapo.DI.Runtime.Behaviours;
+using Overefactor.DI.Editor.Editor.Common;
+using Overefactor.DI.Runtime.Behaviours;
 using UnityEditor;
 using UnityEngine;
 
-namespace Sapo.DI.Editor.Behaviours
+namespace Overefactor.DI.Editor.Editor.Behaviours
 {
     [CustomEditor(typeof(SRootInjector))]
     internal class SRootInjectorEditor : UnityEditor.Editor

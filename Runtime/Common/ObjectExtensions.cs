@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace Sapo.DI.Runtime.Common
+namespace Overefactor.DI.Runtime.Common
 {
     internal static class ObjectExtensions
     {

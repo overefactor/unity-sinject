@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Sapo.DI.Runtime.Core;
+using Overefactor.DI.Runtime.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace Sapo.DI.Runtime.Behaviours
+namespace Overefactor.DI.Runtime.Behaviours
 {
     /// <summary>
     /// A root injector that initializes the dependency injection system and injects dependencies in the scene.

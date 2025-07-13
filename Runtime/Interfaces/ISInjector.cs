@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Sapo.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Attributes;
 
-namespace Sapo.DI.Runtime.Interfaces
+namespace Overefactor.DI.Runtime.Interfaces
 {
     /// <summary>
     /// Represents an interface for dependency injection, providing functionality

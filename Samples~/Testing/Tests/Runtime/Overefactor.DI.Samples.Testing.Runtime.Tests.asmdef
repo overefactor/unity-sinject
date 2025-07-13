@@ -1,10 +1,12 @@
 {
-    "name": "Sapo.DI.Tests.Runtime",
-    "rootNamespace": "Sapo.DI.Tests",
+    "name": "Overefactor.DI.Samples.Testing.Runtime.Tests",
+    "rootNamespace": "Overefactor.DI.Samples.Testing.Runtime.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Sapo.DI.Runtime"
+        "Overefactor.DI.Runtime",
+        "Overefactor.DI.Tests.Runtime",
+        "Overefactor.DI.Samples.Testing.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

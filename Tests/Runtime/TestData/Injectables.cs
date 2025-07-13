@@ -1,8 +1,7 @@
-using Sapo.DI.Runtime.Attributes;
-using Sapo.DI.Runtime.Core;
-using Sapo.DI.Runtime.Interfaces;
+using Overefactor.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Interfaces;
 
-namespace Sapo.DI.Tests.Runtime.TestData
+namespace Overefactor.DI.Tests.Tests.Runtime.TestData
 {
     internal class PrivateFieldInjectable
     {

@@ -1,12 +1,10 @@
 {
-    "name": "Sapo.DI.Editor",
-    "rootNamespace": "Sapo.DI.Editor",
+    "name": "Overefactor.DI.Samples.SceneLoading",
+    "rootNamespace": "Overefactor.DI.Samples.SceneLoading",
     "references": [
-        "GUID:a2252aa5937ae420baa4f97ab83c8e2e"
+        "Overefactor.DI.Runtime"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

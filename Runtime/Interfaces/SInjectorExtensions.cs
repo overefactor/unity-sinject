@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Sapo.DI.Runtime.Interfaces
+namespace Overefactor.DI.Runtime.Interfaces
 {
     /// <summary>
     /// Provides extension methods for the <see cref="ISInjector"/> interface to simplify dependency resolution.

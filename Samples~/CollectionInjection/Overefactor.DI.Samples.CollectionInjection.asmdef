@@ -1,8 +1,8 @@
 {
-    "name": "Sapo.DI.Samples.ScriptableObjectService",
-    "rootNamespace": "Sapo.DI.Samples.ScriptableObjectService",
+    "name": "Overefactor.DI.Samples.CollectionInjection",
+    "rootNamespace": "Overefactor.DI.Samples.CollectionInjection",
     "references": [
-        "GUID:a2252aa5937ae420baa4f97ab83c8e2e"
+        "Overefactor.DI.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

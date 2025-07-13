@@ -1,6 +1,6 @@
 using System;
 
-namespace Sapo.DI.Samples.SceneLoading
+namespace Overefactor.DI.Samples.SceneLoading
 {
     public interface IGameManager
     {

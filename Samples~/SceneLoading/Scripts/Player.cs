@@ -1,7 +1,7 @@
-using Sapo.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Attributes;
 using UnityEngine;
 
-namespace Sapo.DI.Samples.SceneLoading
+namespace Overefactor.DI.Samples.SceneLoading
 {
     public class Player : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Sapo.DI.Tests.Runtime.Helpers
+namespace Overefactor.DI.Tests.Tests.Runtime.Helpers
 {
     /// <summary>
     /// A helper class for creating game objects for testing purposes.

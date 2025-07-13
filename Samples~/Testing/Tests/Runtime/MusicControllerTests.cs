@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using NUnit.Framework;
-using Sapo.DI.Samples.Testing.Runtime;
-using Sapo.DI.Tests.Runtime.Helpers;
+using Overefactor.DI.Tests.Tests.Runtime.Helpers;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Sapo.DI.Samples.Testing.Tests.Runtime
+namespace Overefactor.DI.Samples.Testing.Runtime.Tests
 {
     [TestFixture]
     public class MusicControllerTests

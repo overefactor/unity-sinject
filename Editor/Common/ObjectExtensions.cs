@@ -1,4 +1,4 @@
-namespace Sapo.DI.Editor.Common
+namespace Overefactor.DI.Editor.Editor.Common
 {
     internal static class ObjectExtensions
     {

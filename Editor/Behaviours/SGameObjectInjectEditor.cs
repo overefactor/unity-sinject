@@ -1,8 +1,8 @@
-using Sapo.DI.Runtime.Behaviours;
+using Overefactor.DI.Runtime.Behaviours;
 using UnityEditor;
 using UnityEngine;
 
-namespace Sapo.DI.Editor.Behaviours
+namespace Overefactor.DI.Editor.Editor.Behaviours
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(SGameObjectInject))]

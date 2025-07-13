@@ -1,7 +1,7 @@
-using Sapo.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Attributes;
 using UnityEngine;
 
-namespace Sapo.DI.Samples.CollectionInjection
+namespace Overefactor.DI.Samples.CollectionInjection
 {
     [CreateAssetMenu(menuName = "Sapo/DI/Samples/Collection Injection/New Entity B")]
     [SRegister(typeof(IEntity))]

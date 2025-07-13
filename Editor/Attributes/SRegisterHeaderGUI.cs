@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sapo.DI.Runtime.Common;
+using Overefactor.DI.Runtime.Common;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Task = System.Threading.Tasks.Task;
 
-namespace Sapo.DI.Editor.Attributes
+namespace Overefactor.DI.Editor.Editor.Attributes
 {
     [InitializeOnLoad]
     internal class SRegisterHeaderGUI

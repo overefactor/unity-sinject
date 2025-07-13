@@ -1,4 +1,4 @@
-namespace Sapo.DI.Runtime.Interfaces
+namespace Overefactor.DI.Runtime.Interfaces
 {
     /// <summary>
     /// Interface for handling the registration event in Sapo DI.

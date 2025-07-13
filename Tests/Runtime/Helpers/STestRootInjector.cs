@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Sapo.DI.Runtime.Behaviours;
-using Sapo.DI.Runtime.Interfaces;
+using Overefactor.DI.Runtime.Behaviours;
+using Overefactor.DI.Runtime.Interfaces;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Sapo.DI.Tests.Runtime.Helpers
+namespace Overefactor.DI.Tests.Tests.Runtime.Helpers
 {
     /// <summary>
     /// A helper class for creating a root injector for testing purposes.

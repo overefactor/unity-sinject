@@ -1,6 +1,6 @@
 using System;
 
-namespace Sapo.DI.Samples.Testing.Runtime
+namespace Overefactor.DI.Samples.Testing.Runtime
 {
     public interface IGameSoundSettings
     {

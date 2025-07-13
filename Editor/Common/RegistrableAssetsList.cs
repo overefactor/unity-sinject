@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sapo.DI.Runtime.Attributes;
-using Sapo.DI.Runtime.Common;
+using Overefactor.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Common;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Sapo.DI.Editor.Common
+namespace Overefactor.DI.Editor.Editor.Common
 {
     internal class RegistrableAssetsList
     {

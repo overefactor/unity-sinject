@@ -2,5 +2,5 @@
 
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Sapo.DI.Editor")]
-[assembly: InternalsVisibleTo("Sapo.DI.Tests.Runtime")]
+[assembly: InternalsVisibleTo("Overefactor.DI.Editor")]
+[assembly: InternalsVisibleTo("Overefactor.DI.Tests.Runtime")]
