@@ -1,6 +1,6 @@
 {
-    "name": "Sapo.DI.Runtime",
-    "rootNamespace": "Sapo.DI.Runtime",
+    "name": "Overefactor.DI.Runtime",
+    "rootNamespace": "Overefactor.DI.Runtime",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

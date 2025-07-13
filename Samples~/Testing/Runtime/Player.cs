@@ -1,7 +1,7 @@
-using Sapo.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Attributes;
 using UnityEngine;
 
-namespace Sapo.DI.Samples.Testing.Runtime
+namespace Overefactor.DI.Samples.Testing.Runtime
 {
     public class Player : MonoBehaviour
     {

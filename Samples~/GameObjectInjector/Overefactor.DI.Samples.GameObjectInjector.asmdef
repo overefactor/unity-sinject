@@ -1,8 +1,8 @@
 {
-    "name": "Sapo.DI.Samples.Testing.Runtime",
-    "rootNamespace": "Sapo.DI.Samples.Testing.Runtime",
+    "name": "Overefactor.DI.Samples.GameObjectInjector",
+    "rootNamespace": "Overefactor.DI.Samples.GameObjectInjector",
     "references": [
-        "GUID:a2252aa5937ae420baa4f97ab83c8e2e"
+        "Overefactor.DI.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

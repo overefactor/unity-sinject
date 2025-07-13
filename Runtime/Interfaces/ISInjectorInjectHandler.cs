@@ -1,4 +1,4 @@
-namespace Sapo.DI.Runtime.Interfaces
+namespace Overefactor.DI.Runtime.Interfaces
 {
     /// <summary>
     /// Interface for handling the injection event in Sapo DI.

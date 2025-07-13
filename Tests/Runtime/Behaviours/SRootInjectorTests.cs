@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
-using Sapo.DI.Runtime.Behaviours;
-using Sapo.DI.Tests.Runtime.TestData;
+using Overefactor.DI.Runtime.Behaviours;
+using Overefactor.DI.Runtime.Interfaces;
+using Overefactor.DI.Tests.Tests.Runtime.TestData;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-using Is = Sapo.DI.Tests.Runtime.Helpers.Is;
+using Is = Overefactor.DI.Tests.Tests.Runtime.Helpers.Is;
 
-namespace Sapo.DI.Tests.Runtime.Behaviours
+namespace Overefactor.DI.Tests.Tests.Runtime.Behaviours
 {
     [TestFixture]
     internal class SRootInjectorTests

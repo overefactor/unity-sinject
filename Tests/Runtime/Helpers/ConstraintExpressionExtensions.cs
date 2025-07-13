@@ -1,7 +1,7 @@
 using NUnit.Framework.Constraints;
 using UnityEngine;
 
-namespace Sapo.DI.Tests.Runtime.Helpers
+namespace Overefactor.DI.Tests.Tests.Runtime.Helpers
 {
     internal class DestroyedConstraint : Constraint
     {

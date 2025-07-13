@@ -1,4 +1,4 @@
-namespace Sapo.DI.Samples.ComponentService
+namespace Overefactor.DI.Samples.GameObjectInjector
 {
     public interface IPlayerData
     {

@@ -1,8 +1,8 @@
 using NUnit.Framework;
-using Sapo.DI.Samples.Testing.Runtime;
-using Sapo.DI.Tests.Runtime.Helpers;
+using Overefactor.DI.Runtime.Interfaces;
+using Overefactor.DI.Tests.Tests.Runtime.Helpers;
 
-namespace Sapo.DI.Samples.Testing.Tests.Runtime
+namespace Overefactor.DI.Samples.Testing.Runtime.Tests
 {
     [TestFixture]
     public class PlayerTests

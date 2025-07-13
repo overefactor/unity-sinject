@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Sapo.DI.Runtime.Common
+namespace Overefactor.DI.Runtime.Common
 {
     internal static class ReflectionExtensions
     {
@@ -60,6 +60,38 @@ namespace Sapo.DI.Runtime.Common
             }
 
             return Type.EmptyTypes;
+        }
+
+        internal static bool IsArray(this Type type, out Type elementType)
+        {
+            if (!type.IsArray || type.GetArrayRank() != 1)
+            {
+                elementType = null;
+                return false;
+            }
+            
+            elementType = type.GetElementType();
+            return true;
+        }
+
+        internal static bool IsList(this Type type, out Type elementType)
+        {
+            elementType = null;
+            if (!type.IsGenericType) return false;
+            if (type.GetGenericTypeDefinition() != typeof(List<>)) return false;
+
+            elementType = type.GetGenericArguments()[0];
+            return true;
+        }
+
+        internal static bool IsEnumerable(this Type type, out Type elementType)
+        {
+            elementType = null;
+            if (!type.IsGenericType) return false;
+            if (type.GetGenericTypeDefinition() != typeof(IEnumerable<>)) return false;
+            
+            elementType = type.GetGenericArguments()[0];
+            return true;
         }
     }
 }

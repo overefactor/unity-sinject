@@ -1,7 +1,7 @@
-using Sapo.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Attributes;
 using UnityEngine;
 
-namespace Sapo.DI.Samples.ScriptableObjectService
+namespace Overefactor.DI.Samples.ScriptableObjectService
 {
     [SRegister(typeof(ServiceC))]
     [CreateAssetMenu(menuName = "Sapo/DI/Samples/Scriptable Object Service/New Service C")]

@@ -1,6 +1,6 @@
 using System;
 
-namespace Sapo.DI.Runtime.Attributes
+namespace Overefactor.DI.Runtime.Attributes
 {
     /// <summary>
     /// The CInjectAttribute attribute is used to mark fields that

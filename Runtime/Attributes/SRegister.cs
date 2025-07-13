@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
 
-namespace Sapo.DI.Runtime.Attributes
+namespace Overefactor.DI.Runtime.Attributes
 {
     /// <summary>
     /// The SRegister attribute is used to mark Unity Components and ScriptableObjects that should be registered for dependency injection.

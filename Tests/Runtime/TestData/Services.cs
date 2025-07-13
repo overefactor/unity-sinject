@@ -1,6 +1,6 @@
-using Sapo.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Attributes;
 
-namespace Sapo.DI.Tests.Runtime.TestData
+namespace Overefactor.DI.Tests.Tests.Runtime.TestData
 {
     internal interface IServiceA
     {

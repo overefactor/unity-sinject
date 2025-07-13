@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Sapo.DI.Runtime.Behaviours;
-using Sapo.DI.Runtime.Core;
+using Overefactor.DI.Runtime.Common;
+using Overefactor.DI.Runtime.Core;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Sapo.DI.Editor.Common
+namespace Overefactor.DI.Editor.Editor.Common
 {
     public class InjectorRuntimeInfo
     {
-        private readonly Dictionary<Type, object> _instances;
-        private readonly Dictionary<Type, object> _parentInstances;
+        private readonly Dictionary<Type, SInstanceCollection> _instances;
+        private readonly Dictionary<Type, SInstanceCollection> _parentInstances;
 
         public InjectorRuntimeInfo(SInjector injector)
         {
@@ -20,22 +20,22 @@ namespace Sapo.DI.Editor.Common
             
             var instancesField = t.GetField("_instances", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            _instances = (Dictionary<Type, object>)instancesField!.GetValue(injector);
+            _instances = (Dictionary<Type, SInstanceCollection>)instancesField!.GetValue(injector);
 
             if (t.GetField("_parent", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(injector) is not
                 SInjector parent) return;
 
-            _parentInstances = (Dictionary<Type, object>)instancesField.GetValue(parent);
+            _parentInstances = (Dictionary<Type, SInstanceCollection>)instancesField.GetValue(parent);
         }
         
         public void OnGUI()
         {
             EditorGUI.indentLevel++;
 
-            var count = DrawInstances(_parentInstances, new Color(1, 0.5f, 0f));
-            count += DrawInstances(_instances, new Color(0.5f, 1, 0f));
+            var hasInstances = DrawInstances(_parentInstances, new Color(1, 0.5f, 0f));
+            hasInstances |= DrawInstances(_instances, new Color(0.5f, 1, 0f));
 
-            if (count == 0)
+            if (!hasInstances)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
                 EditorGUILayout.LabelField("No instances registered.", EditorStyles.miniBoldLabel);
@@ -45,41 +45,61 @@ namespace Sapo.DI.Editor.Common
             EditorGUI.indentLevel--;
         }
 
-        private int DrawInstances(Dictionary<Type, object> instances, Color color)
+        private bool DrawInstances(Dictionary<Type, SInstanceCollection> instances, Color color)
         {
-            if (instances == null) return 0;
+            if (instances == null) return false;
             
-            var count = 0;
-            foreach (var (type, instance) in instances)
+            var hasInstances = false;
+            
+            foreach (var (type, collection) in instances)
             {
-                var isNullOrDestroyedUnityObject = instance == null || instance is Object o && !o;
-                if (isNullOrDestroyedUnityObject) continue;
-
-                var c = GUI.color;
-                GUI.color = color;
-                GUI.Box(EditorGUI.IndentedRect(EditorGUILayout.BeginVertical()), "", EditorStyles.helpBox);
-                GUI.color = c;
-                GUILayout.Space(2);
-
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.Space(4);
+                var first = true;
                 
-                EditorGUILayout.LabelField(type.Name, EditorStyles.boldLabel);
+                foreach (var instance in collection.Instances)
+                {
+                    if (!instance.IsAlive()) continue;
+                    
+                    var c = GUI.color;
+                    GUI.color = color;
+                    GUI.Box(EditorGUI.IndentedRect(EditorGUILayout.BeginVertical()), "", EditorStyles.helpBox);
+                    GUI.color = c;
+                    GUILayout.Space(2);
 
-                EditorGUI.BeginDisabledGroup(true);
-                if (instance is Object uo) EditorGUILayout.ObjectField(uo, uo.GetType(), true);
-                else EditorGUILayout.LabelField(instance.ToString());
-                EditorGUI.EndDisabledGroup();
+
+                    EditorGUILayout.BeginHorizontal();
+                    GUILayout.Space(4);
                 
-                GUILayout.Space(2);
-                EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.LabelField(type.Name, EditorStyles.boldLabel);
 
-                GUILayout.Space(2);
-                EditorGUILayout.EndVertical();
-                count++;
+                    EditorGUI.BeginDisabledGroup(true);
+                    if (instance is Object uo) EditorGUILayout.ObjectField(uo, uo.GetType(), true);
+                    else EditorGUILayout.LabelField(GetInstanceInfo(instance));
+                    EditorGUI.EndDisabledGroup();
+                
+                    GUILayout.Space(2);
+                    EditorGUILayout.EndHorizontal();
+
+                    GUILayout.Space(2);
+                    EditorGUILayout.EndVertical();
+
+                    if (first) EditorGUI.indentLevel++;
+                    first = false;
+                }
+                
+                if (!first) EditorGUI.indentLevel--;
+
+                hasInstances |= !first;
             }
 
-            return count;
+            return hasInstances;
+        }
+
+
+        
+        private string GetInstanceInfo(object instance)
+        {
+            var str = instance.ToString();
+            return str == instance.GetType().ToString() ? $"{str} [{instance.GetShortHashCode()}]" : str;
         }
     }
 }

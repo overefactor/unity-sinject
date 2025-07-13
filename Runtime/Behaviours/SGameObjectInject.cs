@@ -1,8 +1,8 @@
 using System.ComponentModel;
-using Sapo.DI.Runtime.Interfaces;
+using Overefactor.DI.Runtime.Interfaces;
 using UnityEngine;
 
-namespace Sapo.DI.Runtime.Behaviours
+namespace Overefactor.DI.Runtime.Behaviours
 {
     /// <summary>
     /// A GameObject Inject is a component that injects dependencies in the GameObject during game object instantiation.
@@ -22,20 +22,35 @@ namespace Sapo.DI.Runtime.Behaviours
 
         private bool _isInjected;
         
-        void ISInjectorRegisterHandler.OnRegister(ISInjector injector) => _isInjected = true;
+#if UNITY_EDITOR
+        internal ISInjector LocalInjector { get; private set; }
+#endif
+        
+        void ISInjectorRegisterHandler.OnRegister(ISInjector injector)
+        {
+            _isInjected = true;
+#if UNITY_EDITOR
+            LocalInjector = injector;
+#endif
+        }
 
         private void Awake()
         {
             if (_isInjected)
             {
+#if !UNITY_EDITOR
                 Destroy(this);
+#endif
                 return;
             }
 
             var injector = SRootInjector.FindOrCreateSingleton();
             injector.InjectGameObject(gameObject);
             
+            
+#if !UNITY_EDITOR
             Destroy(this);
+#endif
         }
 
     }

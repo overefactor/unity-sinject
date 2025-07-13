@@ -1,8 +1,8 @@
-using Sapo.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Sapo.DI.Samples.SceneLoading
+namespace Overefactor.DI.Samples.SceneLoading
 {
     public class ControlGUI : MonoBehaviour
     {

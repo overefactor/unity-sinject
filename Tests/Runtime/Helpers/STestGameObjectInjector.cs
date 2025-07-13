@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
+using Overefactor.DI.Runtime.Behaviours;
+using Overefactor.DI.Runtime.Core;
+using Overefactor.DI.Runtime.Interfaces;
 using UnityEngine;
-using Sapo.DI.Runtime.Behaviours;
-using Sapo.DI.Runtime.Core;
-using Sapo.DI.Runtime.Interfaces;
 
-namespace Sapo.DI.Tests.Runtime.Helpers
+namespace Overefactor.DI.Tests.Tests.Runtime.Helpers
 {
     /// <summary>
     /// A helper class for injecting game objects for testing purposes.
@@ -38,27 +39,11 @@ namespace Sapo.DI.Tests.Runtime.Helpers
         }
 
 
-        public T Resolve<T>() => _injector.Resolve<T>();
-
-        public object Resolve(Type type) => _injector.Resolve(type);
-
-        public bool TryResolve<T>(out T instance) => _injector.TryResolve(out instance);
-
         public bool TryResolve(Type type, out object instance) => _injector.TryResolve(type, out instance);
-
-        public bool IsRegistered<T>() => _injector.IsRegistered<T>();
-
-        public bool IsRegistered(Type type) => _injector.IsRegistered(type);
-
-        public void Register<T>(object instance) => _injector.Register<T>(instance);
-
-        public void Register(Type type, object instance) => _injector.Register(type, instance);
-
-        public bool TryRegister<T>(object instance) => _injector.TryRegister<T>(instance);
+        
+        public void ResolveAll(Type type, ISet<object> instances) => _injector.ResolveAll(type, instances);
 
         public bool TryRegister(Type type, object instance) => _injector.TryRegister(type, instance);
-
-        public void Unregister<T>(object instance) => _injector.Unregister<T>(instance);
 
         public void Unregister(Type type, object instance) => _injector.Unregister(type, instance);
 

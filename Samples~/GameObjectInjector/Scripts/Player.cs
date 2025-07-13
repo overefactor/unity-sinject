@@ -1,7 +1,7 @@
-using Sapo.DI.Runtime.Attributes;
+using Overefactor.DI.Runtime.Attributes;
 using UnityEngine;
 
-namespace Sapo.DI.Samples.ComponentService
+namespace Overefactor.DI.Samples.GameObjectInjector
 {
     public class Player : MonoBehaviour
     {
